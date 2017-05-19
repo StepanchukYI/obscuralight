@@ -35,26 +35,25 @@ class User
 
         $tmp_db_row = sqldb_connection::Select_Single_View_user($user_id_select);   // достаем строки из БД
 
-        if($tmp_db_row == false) array_push($errorArr, "Nothing to show");
+        if ($tmp_db_row == false) array_push($errorArr, "Nothing to show");
 
-        if(count($errorArr) == 0){
+        if (count($errorArr) == 0) {
             $friend = sqldb_connection::Frends_test($user_id, $user_id_select);
 
-            if(@$friend['friend_request'] == 1) $friend_ans = 'true';
-            elseif(@$friend['friend_request'] == 0){
-                if($friend['user_id_1'] == $user_id){
+            if (@$friend['friend_request'] == 1) $friend_ans = 'true';
+            if (@$friend['friend_request'] == 0) {
+                if ($friend['user_id_1'] == $user_id) {
                     $friend_ans = 'send_request';
-                }
-                if($friend['user_id_2'] == $user_id){
+                } elseif ($friend['user_id_2'] == $user_id) {
                     $friend_ans = 'request';
                 }
             }
-            elseif($friend ==  false)  $friend_ans = 'false';
-
-            $tmp_db_row['friend'] = $friend_ans;
+            if ($friend == false) $friend_ans = 'false';
+            if ($user_id != $user_id_select) {
+                $tmp_db_row['friend'] = $friend_ans;
+            }
             return $tmp_db_row;
-        }
-        else{
+        } else {
             return $errorArr[0];
         }
     }
