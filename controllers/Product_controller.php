@@ -61,7 +61,7 @@ switch (@$command) {
             $response = "null field";
         }
         break;
-    case "product_singleview": //http://localhost/trustme/controllers/product_controller.php?command=product_singleview&user_id=1&product_id=1
+    case "product_single_view": //http://localhost/trustme/controllers/product_controller.php?command=product_singleview&user_id=1&product_id=1
 
 
         if (@$user_id != "" && @$product_id != "") {
@@ -71,7 +71,7 @@ switch (@$command) {
             $response = "null field";
         }
         break;
-    case "product_multiview": //http://localhost/trustme/controllers/product_controller.php?command=product_multiview&user_id=1&product_id=1
+    case "product_multi_view": //http://localhost/trustme/controllers/product_controller.php?command=product_multiview&user_id=1&product_id=1
 
 
         if (@$user_id != "" && @$product_id != "") {
