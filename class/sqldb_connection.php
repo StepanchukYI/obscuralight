@@ -209,8 +209,8 @@ class sqldb_connection
     {
         $dbh = sqldb_connection::DB_connect();
         $sth = $dbh->prepare("SELECT user_id_1, user_id_2, friend_request
-        FROM friends WHERE user_id_1 = :user_id AND user_id_2 = :user_id_friend 
-        LIMIT 50");
+        FROM friends WHERE (user_id_1 = :user_id AND user_id_2 = :user_id_friend) 
+        OR (user_id_2 = :user_id AND user_id_1 = :user_id_friend)");
         $sth->execute(array(':user_id' => $user_id, ':user_id_friend' => $user_id_friend));
         return $sth->fetch(PDO::FETCH_ASSOC);
     }
@@ -222,6 +222,8 @@ class sqldb_connection
         $sth = $dbh->prepare("INSERT IGNORE INTO friends (user_id_1, user_id_2, friend_request, friendship_date) 
         VALUES (:user_id, :user_id_friend, FALSE, NOW())");
         $sth->execute(array(':user_id' => $user_id, ':user_id_friend' => $user_id_friend));
+        return $dbh->lastInsertId();
+
     }
 
 //Отмена заявки
@@ -400,7 +402,7 @@ class sqldb_connection
     /*
    * Функция для выборки данных О ТОВАРЕ для пользователя
    * */
-    public static function Show_product_multiview($product_id)
+    public static function Show_product_multiview($user_id)
     {
         $dbh = sqldb_connection::DB_connect();
         $sth = $dbh->prepare("SELECT p.product_id, p.product_name, p.owner_id, p.price,
@@ -408,8 +410,8 @@ class sqldb_connection
                                     FROM product p
                                     INNER JOIN auction a
                                     INNER JOIN productgallery pg
-                                    WHERE p.product_id = :product_id"); // показать первые 50 товаров
-        $sth->execute(array(':product_id' => $product_id));
+                                    WHERE p.owner_id = :user_id"); // показать первые 50 товаров
+        $sth->execute(array(':user_id' => $user_id));
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
     /*

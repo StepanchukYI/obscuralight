@@ -137,23 +137,7 @@ class ProductTest extends PHPUnit_Framework_TestCase
         );
     }
     /*                                      OWNER BUYER STATUS                               */
-    /**
-     * @test
-     */
-    public function test_owner_buyer_status(){
-        $status = 'owner';
-        $product = new Product();
-        $this->assertEquals($status,$product->Owner_buyer_status(10));
-    }
 
-    /**
-     * @test
-     */
-    public function test_owner_buyer_status_error(){
-        $err = array('Failed to get owner/buyer status');
-        $product = new Product();
-        $this->assertEquals($err,$product->Owner_buyer_status(null));
-    }
 
     /*                                      LIST PRODUCT                                */
     /**
