@@ -116,6 +116,14 @@ class sqldb_connection
             ':small_photo' => $photo_path . $user_id . "_small.jpeg"));
     }
 
+    public static function Update_firebase($user_id, $firebase_id)
+    {
+        $dbh = sqldb_connection::DB_connect();
+        $sth = $dbh->prepare("UPDATE user SET firebase_id = :firebase_id
+                              WHERE user_ID = :id");
+        return $sth->execute(array(':id' => $user_id, ':firebase_id' => $firebase_id));
+    }
+
     /*
        * Илья
        *
@@ -406,10 +414,9 @@ class sqldb_connection
     {
         $dbh = sqldb_connection::DB_connect();
         $sth = $dbh->prepare("SELECT p.product_id, p.product_name, p.owner_id, p.price,
-            p.status, a.bid_date, p.auction_end, pg.pt_medium_photo
-                                    FROM product p
-                                    INNER JOIN auction a
-                                    INNER JOIN productgallery pg
+            p.status, p.auction_end, pg.pt_medium_photo
+                                    FROM product p 
+                                    INNER JOIN productgallery pg ON p.product_id = pg.product_id
                                     WHERE p.owner_id = :user_id"); // показать первые 50 товаров
         $sth->execute(array(':user_id' => $user_id));
         return $sth->fetchAll(PDO::FETCH_ASSOC);

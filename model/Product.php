@@ -196,7 +196,6 @@ class Product
             $tmp_db_row = sqldb_connection::Show_product_multiview($user_id);
             return $tmp_db_row;
         } else {
-
             return "Failed user id";
         }
     }

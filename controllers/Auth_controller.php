@@ -45,6 +45,9 @@ switch (@$command) {
     case "forgot_pass":
         $response = Password_forgot(@$email);
         break;
+    case "auth_firebase":
+        $response = Firebase_id(@$id, @$firebase_id);
+        break;
     default:
         $response = "failed command";
         break;

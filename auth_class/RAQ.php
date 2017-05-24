@@ -63,11 +63,6 @@ function Registration_min($email, $phone, $password)
             Temp_code());
         return sqldb_connection::Auth_Select_All($email, $password);
     } else {
-        /*
-        $request = array(
-            'error' => $errorArr[0]);
-        return $request;
-        */
         return $errorArr[0];
     }
 }
@@ -145,6 +140,19 @@ function Quit($id)
     return sqldb_connection::Auth_Select_All_id($id);
 }
 
+function Firebase_id($user_id, $firebase_id){
+    $errorArr = array();    //создание массива ошибок.
+
+    if($user_id == "") array_push($errorArr, "Failed id");
+    if($firebase_id == "") array_push($errorArr, "Failed firebase id");
+
+    if (count($errorArr) == 0) {
+        sqldb_connection::Update_firebase($user_id, $firebase_id);
+        return sqldb_connection::Auth_Select_All_id($user_id);
+    } else {
+        return $errorArr[0];
+    }
+}
 
 function Password_forgot($login){
     $errorArr = array();
