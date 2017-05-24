@@ -201,7 +201,7 @@ class sqldb_connection
         $sth = $dbh->prepare("UPDATE friends SET friend_request = FALSE, friendship_date = NOW()
         WHERE (user_id_1 = :user_id AND user_id_2 = :user_id_friend) 
         OR (user_id_2 = :user_id AND user_id_1 = :user_id_friend)");
-        $sth->execute(array(':user_id' => $user_id, ':user_id_friend' => $user_id_friend));
+        return $sth->execute(array(':user_id' => $user_id, ':user_id_friend' => $user_id_friend));
     }
 
 //Проверка на успешность запроса
@@ -233,7 +233,7 @@ class sqldb_connection
         $sth = $dbh->prepare("DELETE FROM friends
         WHERE (user_id_1 = :user_id AND user_id_2 = :user_id_friend) 
         OR (user_id_2 = :user_id AND user_id_1 = :user_id_friend)");
-        $sth->execute(array(':user_id' => $user_id, ':user_id_friend' => $user_id_friend));
+        return $sth->execute(array(':user_id' => $user_id, ':user_id_friend' => $user_id_friend));
     }
 
 //Приём заявки
@@ -243,7 +243,7 @@ class sqldb_connection
         $sth = $dbh->prepare("UPDATE friends SET friend_request = TRUE, friendship_date = NOW()
         WHERE (user_id_1 = :user_id AND user_id_2 = :user_id_friend) 
         OR (user_id_2 = :user_id AND user_id_1 = :user_id_friend)");
-        $sth->execute(array(':user_id' => $user_id, ':user_id_friend' => $user_id_friend));
+        return $sth->execute(array(':user_id' => $user_id, ':user_id_friend' => $user_id_friend));
     }
 
 //Функция для выборки списка заявок входящие
